@@ -1,0 +1,3 @@
+To start go to the folder and run: python gui.py
+Select the picture or gif you want to convert in the import button.
+The export button will be the location of the result file.
