@@ -1,3 +1,13 @@
 To start go to the folder and run: python gui.py
+
 Select the picture or gif you want to convert in the import button.
+
 The export button will be the location of the result file.
+
+Also, please create 3 folders:
+  gif_frame
+  gif_frame_text
+  to_image 
+for converting a gif file. 
+
+PLEASE DELETE ALL THE FILES IN THESE FOLDERS AFTER THE GIF HAS BEEN CONVERTED
