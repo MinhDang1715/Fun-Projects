@@ -33,7 +33,7 @@ class App(QWidget):
         btn_export.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
 
         btn_cam = QPushButton('Open Webcam', self)
-        # btn_cam.clicked.connect(self.btn_export_click)
+        btn_cam.clicked.connect(self.btn_cam_click)
         btn_cam.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
 
         self.layout.addWidget(btn_import)
@@ -41,6 +41,9 @@ class App(QWidget):
         self.layout.addWidget(btn_cam)
         self.window.setLayout(self.layout)
         self.window.show()
+
+    def btn_cam_click(self):
+        main.webcamConvert()
 
     def btn_import_click(self):
         # get the input file

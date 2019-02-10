@@ -1,6 +1,4 @@
 import os.path
-import sys
-import time
 import numpy as np
 import imageio
 import cv2
@@ -8,7 +6,6 @@ import pygame
 
 from PIL import Image, ImageDraw, ImageFont
 from math import trunc
-from pygame.locals import *
 from natsort import natsorted
 
 
@@ -225,58 +222,78 @@ def removeFiles():
         os.remove('to_image/' + file)
 
 
-def webcamConvert():
-    # for showing the ASCII
-    pygame.init()
-    pygame.font.init()
-    font = pygame.font.SysFont('monospace', 15)
-    size = (1000, 1000)
-    WHITE = (255, 255, 255)
+# for webcam conversion
+# blit text with multiple line on screen
+# this function is made by Ted Klein Bergman
+# https://stackoverflow.com/questions/42014195/rendering-text-with-multiple-lines-in-pygame
+def blit_text(surface, text, pos, font):
     BLACK = (0, 0, 0)
+    # 2D array where each row is a list of words.
+    words = [word.split(' ') for word in text.splitlines()]
+    # The width of a space.
+    space = font.size(' ')[0]
+    max_width, max_height = surface.get_size()
+    x, y = pos
+    for line in words:
+        for word in line:
+            word_surface = font.render(word, False, BLACK)
+            word_width, word_height = word_surface.get_size()
+            if x + word_width >= max_width:
+                x = pos[0]  # Reset the x.
+                y += word_height  # Start on new row.
+            surface.blit(word_surface, (x, y))
+            x += word_width + space
+        x = pos[0]  # Reset the x.
+        y += word_height  # Start on new row.
+
+
+def webcamConvert():
+    # output ASCII
+    pygame.init()
+    size = (1000, 800)
+    WHITE = (255, 255, 255)
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption("Output")
+    font = pygame.font.SysFont('monospace', 5)
+
+    # ASCII art
+    ASCII = ['!', '|', '$', '%', '*', '+', ',', '-', '.', ':', ';', '?', '@', '^', 'o', 'x', '#']
 
     # webcam input
     name = 'Input'
-    cv2.namedWindow("Input", cv2.WINDOW_AUTOSIZE)
+    cv2.namedWindow("Input")
     vc = cv2.VideoCapture(0)
-
     cv2.startWindowThread()
 
     # get the first frame
-    if vc.isOpened():
-        rval, frame = vc.read()
-    else:
-        rval = False
+    rval, frame = vc.read()
 
     # when we click x on the window, getWindowProperty will returns -1
     # use this so we could close the window after clicking x
     while cv2.getWindowProperty(name, 0) >= 0:
         # gray scale and how the frame
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        arr = np.array(gray)
+        grayResize = cv2.resize(gray, (330, 115))
         # show the raw input
         cv2.imshow(name, gray)
         rval, frame = vc.read()
 
         output = ''
-        # put the ASCII on screen
-        text = font.render(output, False, BLACK)
+        for x in grayResize:
+            for y in x:
+                output = output + ASCII[trunc(y / 255 * 8) - 1]
+            output = output + "\n"
+
         screen.fill(WHITE)
-        # quit the pygame when the webcam is closed
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                sys.exit()
-        screen.blit(text, (0, 0))
+        blit_text(screen, output, (0, 0), font)
         pygame.display.flip()
 
         # press escape to quit the webcam
-        key = cv2.waitKey(20)
+        key = cv2.waitKey(10)
         if key == 27:
             break
 
+    pygame.display.quit()
+    pygame.quit()
     vc.release()
     cv2.destroyWindow(name)
-
-
-# webcamConvert()
