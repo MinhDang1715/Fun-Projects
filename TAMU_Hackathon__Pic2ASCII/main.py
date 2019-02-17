@@ -250,7 +250,7 @@ def blit_text(surface, text, pos, font):
 def webcamConvert():
     # output ASCII
     pygame.init()
-    size = (1000, 800)
+    size = (755, 842)
     WHITE = (255, 255, 255)
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption("Output")
@@ -273,7 +273,7 @@ def webcamConvert():
     while cv2.getWindowProperty(name, 0) >= 0:
         # gray scale and how the frame
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        grayResize = cv2.resize(gray, (330, 115))
+        grayResize = cv2.resize(gray, (250, 120))
         # show the raw input
         cv2.imshow(name, gray)
         rval, frame = vc.read()
