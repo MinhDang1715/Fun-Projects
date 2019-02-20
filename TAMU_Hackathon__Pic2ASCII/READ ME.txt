@@ -1,3 +1,12 @@
+Please make sure you have install these library:
+  1. opencv: pip install opencv-python
+  2. numpy: pip install numpy
+  3. pygame: pip install pygame
+  4. imageio: pip install imageio
+  5. pillow: pip install Pillow
+  6. natsort: pip install natsort
+  7. pyqt5: pip install PyQt5
+  
 To start go to the folder and run: python gui.py
 
 Select the picture or gif you want to convert in the import button.
@@ -7,9 +16,9 @@ The export button will be the location of the result file.
 The webcam will let show you the realtime ASCII code according to your webcam.
 
 Also, please create 3 folders in the same directory of those 2 python files:
-  gif_frame
-  gif_frame_text
-  to_image 
+  1. gif_frame
+  2. gif_frame_text
+  3. to_image 
 for converting a gif file. 
 
 If you choose the simple mode the result gif will show you clearly how the ASCII move around, 
