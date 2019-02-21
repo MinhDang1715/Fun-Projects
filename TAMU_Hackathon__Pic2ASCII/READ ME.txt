@@ -15,12 +15,6 @@ The export button will be the location of the result file.
 
 The webcam will let show you the realtime ASCII code according to your webcam.
 
-Also, please create 3 folders in the same directory of those 2 python files:
-  1. gif_frame
-  2. gif_frame_text
-  3. to_image 
-for converting a gif file. 
-
 If you choose the simple mode the result gif will show you clearly how the ASCII move around, 
 however the quality of the picture will not be so good. The detail mode will give you a better 
 quality but you could not see the ASCII character.
